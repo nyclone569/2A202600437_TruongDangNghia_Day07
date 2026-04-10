@@ -1,8 +1,8 @@
 # Báo Cáo Lab 7: Embedding & Vector Store
 
-**Họ tên:** [Tên sinh viên]
-**Nhóm:** [Tên nhóm]
-**Ngày:** [Ngày nộp]
+**Họ tên:** Trương Đăng Nghĩa
+**Nhóm:** Nhóm [Tên nhóm]
+**Ngày:** 10/04/2026
 
 ---
 
@@ -11,29 +11,31 @@
 ### Cosine Similarity (Ex 1.1)
 
 **High cosine similarity nghĩa là gì?**
-> *Viết 1-2 câu:*
+> Hai text chunk có cosine similarity cao nghĩa là chúng "nói về cùng một chủ đề" — embedding của chúng chỉ về cùng một hướng trong không gian vector. Không cần dùng từ giống nhau, miễn là ý nghĩa tương đương thì điểm sẽ gần 1.
 
 **Ví dụ HIGH similarity:**
-- Sentence A:
-- Sentence B:
-- Tại sao tương đồng:
+- Sentence A: "How do I reset my password?"
+- Sentence B: "Steps to change your login password."
+- Hai câu cùng hỏi về đổi mật khẩu nên embedding khá gần nhau.
 
 **Ví dụ LOW similarity:**
-- Sentence A:
-- Sentence B:
-- Tại sao khác:
+- Sentence A: "The cake recipe requires flour and sugar."
+- Sentence B: "How to configure a Linux firewall."
+- Một câu về nấu ăn, một câu về hệ thống — hoàn toàn khác nhau, embedding cách xa.
 
-**Tại sao cosine similarity được ưu tiên hơn Euclidean distance cho text embeddings?**
-> *Viết 1-2 câu:*
+**Tại sao cosine similarity tốt hơn Euclidean distance cho text embeddings?**
+> Cosine similarity chỉ nhìn vào góc giữa 2 vector, bỏ qua độ dài. Hai câu một ngắn một dài nhưng cùng nghĩa vẫn ra điểm cao. Còn Euclidean distance tính cả khoảng cách tuyệt đối nên bị ảnh hưởng bởi độ dài câu, dễ cho kết quả sai. Thêm nữa, hầu hết embedding model tạo ra vector có độ dài gần bằng nhau, nên cosine là thước đo phù hợp hơn.
 
 ### Chunking Math (Ex 1.2)
 
 **Document 10,000 ký tự, chunk_size=500, overlap=50. Bao nhiêu chunks?**
-> *Trình bày phép tính:*
-> *Đáp án:*
+> Dùng công thức: `num_chunks = ceil((doc_length - overlap) / (chunk_size - overlap))`
+> `= ceil((10000 - 50) / (500 - 50)) = ceil(9950 / 450) = ceil(22.11) = **23 chunks**`
 
 **Nếu overlap tăng lên 100, chunk count thay đổi thế nào? Tại sao muốn overlap nhiều hơn?**
-> *Viết 1-2 câu:*
+> `= ceil((10000 - 100) / (500 - 100)) = ceil(9900 / 400) = ceil(24.75) = **25 chunks**`
+>
+> Overlap tăng thì chunk count cũng tăng (từ 23 lên 25). Lý do muốn overlap nhiều hơn là để tránh bị mất thông tin ở ranh giới giữa các chunk — ví dụ một câu bị cắt đôi sẽ vẫn xuất hiện đầy đủ ở chunk kế tiếp. Nhược điểm là tốn thêm bộ nhớ và compute.
 
 ---
 
