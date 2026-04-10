@@ -27,6 +27,16 @@ SAMPLE_FILES = [
     "data/vi_retrieval_notes.md",
 ]
 
+DATA = [
+    "data/1.md",
+    "data/2.md",
+    "data/3.txt",
+    "data/4.txt",
+    "data/5.md",
+    "data/6.md",
+    "data/7.md"
+]
+
 
 def load_documents_from_files(file_paths: list[str]) -> list[Document]:
     """Load documents from file paths for the manual demo."""
@@ -63,7 +73,7 @@ def demo_llm(prompt: str) -> str:
 
 
 def run_manual_demo(question: str | None = None, sample_files: list[str] | None = None) -> int:
-    files = sample_files or SAMPLE_FILES
+    files = sample_files or DATA
     query = question or "Summarize the key information from the loaded files."
 
     print("=== Manual File Test ===")
